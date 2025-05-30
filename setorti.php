@@ -1,3 +1,7 @@
+<?php
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -15,6 +19,14 @@ if(isset($_POST['editStatus'])){
     set status='".$_POST['status']."'
     where idCalling=".$_POST['idCalling'];
     mysqli_query($conn, $sql);
+}
+if(isset($_POST['sendPassword'])){
+    if($_POST['password']=='freedom' || $_POST['password'] == 'FREEDOM'){
+        $_SESSION['userti'] = 1;
+    }
+}
+if(isset($_POST['logout'])){
+    
 }
 ?>
 <main>
@@ -59,12 +71,16 @@ if(isset($_POST['editStatus'])){
 </main>
 <section class="login">
     <div class="putPassword">
-                    
+            <h2>Senha: </h2>
+            <form action="" method="post">
+                <input type="password" name="password" placeholder="Senha">
+                <input type="submit" name="sendPassword" value="Entrar">  
+            </form>
     </div>    
 </section>
 <style>
 .login{
-    position: absolute;
+    position: relative;
     height: 100%;
     width: 100%;
     top: 0;
@@ -79,6 +95,57 @@ if(isset($_POST['editStatus'])){
     width: 600px;
     height: 450px;
     border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.putPassword h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.putPassword form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.putPassword input[type="password"] {
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.putPassword input[type="password"]:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+.putPassword input[type="submit"] {
+    padding: 12px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.putPassword input[type="submit"]:hover {
+    background-color: #0056b3;
 }
 .formEdit{
     display: flex;
