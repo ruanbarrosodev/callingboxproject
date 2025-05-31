@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chamados</title>
+    <title>ABRIR CHAMADO</title>
 </head>
 <body>
 <?php
@@ -14,7 +14,7 @@ if(isset($_POST['makeCall'])){
     '".$_POST['sector']."',
     '".$_POST['server']."',
     '".$_POST['type']."',
-     'Na fila')";
+     'Em espera')";
     mysqli_query($conn, $sql);
 }
 ?>
@@ -38,9 +38,9 @@ if(isset($_POST['makeCall'])){
                 <label for="sector">Tipo de chamado </label>
                 <select name="type">
                     <option value="">Selecione</option>
-                    <option value="access">Acesso</option>
-                    <option value="software">Software</option>
-                    <option value="hardware">Hardware</option>
+                    <option value="Access">Acesso</option>
+                    <option value="Software">Software</option>
+                    <option value="Hardware">Hardware</option>
                 </select>
             </div>
             <div class="forms">
@@ -60,21 +60,35 @@ if(isset($_POST['makeCall'])){
                 <section>Estado:</section>
             </div>
             <?php 
-            $result = mysqli_query($conn,"select * from calling order by idCalling desc limit 10");
+            $result = mysqli_query($conn,"select * from calling order by idCalling desc limit 5");
             while($dados = mysqli_fetch_array($result)){
                 $dates = date('d/m/Y H:i:s',strtotime($dados['time']));
+                 if($dados['status']=='Em espera'){
+                    $bgColor = 'rgb(128, 128, 128)';
+                }else if($dados['status']=='Em progresso'){
+                    $bgColor = 'rgb(0, 123, 255)';
+                }else{
+                    $bgColor = 'rgb(40, 167, 69)';
+                }
             ?>            
             <div class="container-calling span">
                 <section><?=$dates?></section>
                 <section><?=$dados['sector']?></section>
                 <section><?=$dados['server']?></section>
-                <section><?=$dados['status']?></section>
+                <section class="spacing-flex"><?=$dados['status']?><div class="colorBlock" style="background-color: <?=$bgColor?>"></div> </section>
             </div>
             <?php } ?>
 
         </div>
 </main>
 <style>
+.spacing-flex{
+    display: flex;
+    gap: 20px;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+}
 * , body{
     margin: 0;
     box-sizing: border-box;
@@ -84,9 +98,15 @@ if(isset($_POST['makeCall'])){
 }
 main{
     background-color: lightblue;
-    width: 90%;
+    width: 95%;
     margin: 0 auto;
     padding: 40px;
+    min-height: 99vh;
+}
+.colorBlock{
+    width: 30px;
+    height: 30px;
+    border-radius: 400px;
 }
 h1,h2{
     margin-top: 10px;
@@ -156,6 +176,6 @@ toLocaleString()	Converts a Date object to a string, using locale conventions
 toString()	Converts a Date object to a string
 */
 </script>
-<footer style="margin-top: 100px; height: 10px;width: 100%; text-align:center; margin-bottom: 50px;"><a href="https://ruanbarrosodev.netlify.app">Ruan Barroso</a></footer>
+<!-- <footer style="margin-top: 100px; height: 10px;width: 100%; text-align:center; margin-bottom: 50px;"><a href="https://ruanbarrosodev.netlify.app">Ruan Barroso</a></footer> -->
 </body>
 </html>

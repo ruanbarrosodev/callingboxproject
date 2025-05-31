@@ -7,7 +7,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Setor TI</title>
+    <title>ADMIN - PAINEL</title>
 </head>
 <body>
 <?php
@@ -23,15 +23,26 @@ if(isset($_POST['editStatus'])){
 if(isset($_POST['sendPassword'])){
     if($_POST['password']=='freedom' || $_POST['password'] == 'FREEDOM'){
         $_SESSION['userti'] = 1;
+    }else{
+        $erro = '<p class="error">Você não tem permissão para acessar';
     }
 }
 if(isset($_POST['logout'])){
-    
+    unset($_SESSION['userti']);
+    session_destroy();
 }
 ?>
+<?php 
+    if(!empty($_SESSION['userti'])){
+?>
 <main>
+    <form class="logoutForm" action="" method="post">
+        <a class="btnMenuUp" href="ti">Chamados</a>
+        <input class="btnMenuUp" type="submit" name="logout" value="LOGOUT">
+    </form>
     <!-- Author Ruan Barroso -->
-    <h1> Admin</h1>
+    <h1>PAINEL</h1>
+    
         <div class="callings">
             <h2>Chamados: </h2>
             <div class="container-calling">
@@ -69,18 +80,30 @@ if(isset($_POST['logout'])){
             <?php } ?>
         </div>
 </main>
+<?php }else{ ?>
 <section class="login">
     <div class="putPassword">
+        <?php 
+        if(!empty($_SESSION['userti'])){
+            var_dump($_SESSION['userti']);
+        }
+        ?>
             <h2>Senha: </h2>
+             <?php 
+                if(!empty($erro)){
+                    echo $erro;
+                }
+            ?>
             <form action="" method="post">
                 <input type="password" name="password" placeholder="Senha">
                 <input type="submit" name="sendPassword" value="Entrar">  
             </form>
     </div>    
 </section>
+<?php } ?>
 <style>
 .login{
-    position: relative;
+    position: absolute;
     height: 100%;
     width: 100%;
     top: 0;
@@ -154,6 +177,16 @@ if(isset($_POST['logout'])){
 .formEdit select, .formEdit input{
     padding: 5px;
 }
+.error{
+    color: white;
+    background-color: rgb(252, 185, 185);
+    border: 1px solid rgb(209, 79, 79);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 5px;
+    color: rgb(209, 79, 79);
+    font-weight: bold;
+}
 * , body{
     margin: 0;
     box-sizing: border-box;
@@ -163,9 +196,34 @@ if(isset($_POST['logout'])){
 }
 main{
     background-color: lightblue;
-    width: 90%;
+    width: 95%;
     margin: 0 auto;
     padding: 20px;
+    min-height: 99vh;
+}
+.logoutForm{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    & .btnMenuUp {
+        color: black;
+        padding: 20px;
+        border-radius: 10px;
+        border: none;
+        background-color:rgb(255, 157, 133);
+        box-shadow: 1px 1px 2px 1px rgb(122, 122, 122);
+        border: 1px solid transparent;
+    }
+    & .btnMenuUp:hover{
+        cursor: pointer;
+        background-color:rgb(253, 174, 154);
+    }
+    & .btnMenuUp:nth-child(odd) {
+        background-color:rgb(142, 195, 255);
+    }
+    & .btnMenuUp:nth-child(odd):hover{
+        background-color:rgb(155, 202, 255);
+    }
 }
 h1,h2{
     margin-top: 10px;
@@ -222,6 +280,6 @@ h1,h2{
     background-color: rgb(87, 175, 171);
 }
 </style>
-<footer style="margin-top: 100px; height: 10px;width: 100%; text-align:center; margin-bottom: 50px;"><a href="https://ruanbarrodev.netlify.app/ruanx14_">Ruan Barroso</a></footer>
+<!-- <footer style="margin-top: 100px; height: 10px;width: 100%; text-align:center; margin-bottom: 50px;"><a href="https://ruanbarrodev.netlify.app/ruanx14_">Ruan Barroso</a></footer> -->
 </body>
 </html>

@@ -1,3 +1,5 @@
+create database callingboxproject;
+use callingboxproject;
 create table if not exists calling(
     idCalling int not null auto_increment, 
     time datetime not null DEFAULT CURRENT_TIMESTAMP,
