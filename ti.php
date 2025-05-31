@@ -19,6 +19,8 @@ if(isset($_POST['editStatus'])){
     set status='".$_POST['status']."'
     where idCalling=".$_POST['idCalling'];
     mysqli_query($conn, $sql);
+    header("Location: ./ti");
+    exit;
 }
 if(isset($_POST['sendPassword'])){
     if($_POST['password']=='freedom' || $_POST['password'] == 'FREEDOM'){
@@ -70,7 +72,7 @@ if(isset($_POST['logout'])){
                 <section>Alterar:</section>
             </div>
             <?php 
-            $result = mysqli_query($conn,"select * from calling order by idCalling desc limit 20");
+            $result = mysqli_query($conn,"select * from calling order by idCalling desc limit 15");
             while($dados = mysqli_fetch_array($result)){
                 $dates = date('d/m/Y H:i:s',strtotime($dados['time']));
                 if($dados['status']=='Em espera'){
@@ -89,6 +91,7 @@ if(isset($_POST['logout'])){
                 <section><?=$dados['type']?></section>
                 <section><?=$dados['status']?><div class="colorBlock" style="background-color: <?=$bgColor?>"></div></section>
                 <section>
+                    <?php if($dados['status']!='Finalizado') { ?>
                     <form action="" class="formEdit" method="POST">
                         <input type="hidden" name="idCalling" value="<?=$dados['idCalling']?>">
                         <select class="selectStatus" name="status">
@@ -97,6 +100,7 @@ if(isset($_POST['logout'])){
                         </select>
                         <input id="btnSalvarStatus" type="submit" name="editStatus" value="Salvar">
                     </form>
+                    <?php } ?>
                 </section>
             </div>
             <?php } ?>
@@ -296,11 +300,11 @@ if(isset($_POST['logout'])){
     font-family: sans-serif;
 }
 main{
-    background-color: lightblue;
     width: 95%;
     margin: 0 auto;
     padding: 20px;
     min-height: 99vh;
+    box-shadow: 1px 2px 3px 1px grey;
 }
 .logoutForm{
     display: flex;

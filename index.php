@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -16,10 +17,37 @@ if(isset($_POST['makeCall'])){
     '".$_POST['type']."',
      'Em espera')";
     mysqli_query($conn, $sql);
+    $_SESSION['success'] = [
+        'sector' => $_POST['sector'],
+        'server' => $_POST['server'],
+        'status' => 'Em espera',
+        'type' => $_POST['type'],
+        'time' => date('d/m/Y H:i:s')
+    ];
+    header("Location: ./");
+    exit;
 }
 ?>
+<?php if(!empty($_SESSION['success'])): ?>
+<div class="modal" id="successModal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <p>Chamado criado com sucesso!<br>
+        Para o SETOR: <b><?= $_SESSION['success']['sector'] ?></b><br>
+        Para o SERVIDOR: <b><?= $_SESSION['success']['server'] ?></b><br>
+        O estado está: <b><?= $_SESSION['success']['status'] ?> <br> Tipo: <?= $_SESSION['success']['type'] ?></b><br>
+        No horário: <b><?= $_SESSION['success']['time'] ?></b></p>
+    </div>
+</div>
+<?php unset($_SESSION['success']); endif; ?>
+
 <main>
     <!-- Author Ruan Barroso -->
+    <div class="descriptionStatus">
+        <div><div class="colorBlock" style="background-color: rgb(128, 128, 128)"></div><b><h3> Em espera </h3></b> - Não iniciado, aguardando na fila de chamados.</div>
+        <div><div class="colorBlock" style="background-color: rgb(0, 123, 255)"></div><b><h3>Em processo</h3></b> - Iniciado, aguardando chamado ser resolvido.</div>
+        <div><div class="colorBlock" style="background-color: rgb(40, 167, 69)"></div><b><h3>Finalizado</h3></b> - Chamado finalizado.</div>
+    </div>
     <h1> Abrir chamado</h1>
         <form action="" method="post">
             <div class="forms">
@@ -36,9 +64,9 @@ if(isset($_POST['makeCall'])){
             </div>
             <div class="forms">
                 <label for="sector">Tipo de chamado </label>
-                <select name="type">
+                <select name="type" required>
                     <option value="">Selecione</option>
-                    <option value="Access">Acesso</option>
+                    <option value="Acesso">Acesso</option>
                     <option value="Software">Software</option>
                     <option value="Hardware">Hardware</option>
                 </select>
@@ -60,7 +88,7 @@ if(isset($_POST['makeCall'])){
                 <section>Estado:</section>
             </div>
             <?php 
-            $result = mysqli_query($conn,"select * from calling order by idCalling desc limit 5");
+            $result = mysqli_query($conn,"select * from calling order by idCalling desc limit 6");
             while($dados = mysqli_fetch_array($result)){
                 $dates = date('d/m/Y H:i:s',strtotime($dados['time']));
                  if($dados['status']=='Em espera'){
@@ -82,12 +110,20 @@ if(isset($_POST['makeCall'])){
         </div>
 </main>
 <style>
+.descriptionStatus{
+    background-color: rgb(195, 248, 245);
+    padding: 20px;
+    max-width: 400px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
 .spacing-flex{
     display: flex;
-    gap: 20px;
-    text-align: center;
     justify-content: center;
-    width: 100%;
+    gap: 5px;
+    flex-direction: column;
+    align-items:center;
 }
 * , body{
     margin: 0;
@@ -152,7 +188,7 @@ h1,h2{
     align-items: center;
     justify-content: space-around;
     background-color: rgb(95, 182, 236);
-    height: 40px;
+  
 }
 .container-calling section{
     width: 100%;
@@ -165,6 +201,46 @@ h1,h2{
 .span:nth-child(even){
     background-color: rgb(167, 226, 223);
 }
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-content {
+    position: relative;
+    background: #fff;
+    padding: 20px 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    font-weight: bold;
+    font-size: 16px;
+    animation: fadeIn 0.3s ease;
+    text-align: center;
+    width: 500px;
+    height: 200px;
+}
+.close-btn {
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #888;
+}
+.close-btn:hover {
+    color: #000;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.9);}
+    to {opacity: 1; transform: scale(1);}
+}
+
+
 </style>
 <script>
 //document.querySelector("#time").value = "oldWay";
@@ -178,4 +254,21 @@ toString()	Converts a Date object to a string
 </script>
 <!-- <footer style="margin-top: 100px; height: 10px;width: 100%; text-align:center; margin-bottom: 50px;"><a href="https://ruanbarrosodev.netlify.app">Ruan Barroso</a></footer> -->
 </body>
+<script>
+const modal = document.getElementById('successModal');
+if(modal){
+    const closeBtn = modal.querySelector('.close-btn');
+    modal.addEventListener('click', (e) => {
+        if(e.target === modal) modal.style.display = 'none';
+    });
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 10000);
+}
+</script>
+
+</script>
 </html>
