@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -13,18 +12,11 @@ session_start();
 <?php
 require('connection.php');
 
-if(isset($_POST['editStatus'])){
-    $sql = "
-    update calling
-    set status='".$_POST['status']."'
-    where idCalling=".$_POST['idCalling'];
-    mysqli_query($conn, $sql);
-}
 if(isset($_POST['sendPassword'])){
     if($_POST['password']=='freedom' || $_POST['password'] == 'FREEDOM'){
         $_SESSION['userti'] = 1;
     }else{
-        $erro = '<p class="error">Você não tem permissão para acessar';
+        $erro = '<p class="error">Você não tem permissão para acessar</p>';
     }
 }
 if(isset($_POST['logout'])){
@@ -32,77 +24,235 @@ if(isset($_POST['logout'])){
     session_destroy();
 }
 ?>
-<?php 
-    if(!empty($_SESSION['userti'])){
-?>
+
+<?php if(!empty($_SESSION['userti'])): ?>
 <main>
     <form class="logoutForm" action="" method="post">
         <a class="btnMenuUp" href="ti">Chamados</a>
-        <input class="btnMenuUp" type="submit" name="logout" value="LOGOUT">
+        <input class="btnMenuUp" type="submit" name="logout" value="SAIR">
     </form>
-    <!-- Author Ruan Barroso -->
-    <h1>PAINEL</h1>
-    
-        <div class="callings">
-            <h2>Chamados: </h2>
-            <div class="container-calling">
-                <section>ID:</section>
-                <section>Horario:</section>
-                <section>Setor: </section>
-                <section>Servidor: </section>
-                <section>Tipo: </section>
-                <section>Estado:</section>
-                <section>Alterar:</section>
+    <h1 style="text-align:center; margin: 20px 0;">PAINEL</h1>
+    <div class="container" style="display: grid; grid-template-rows: auto auto auto; gap: 20px; padding: 20px;">
+    <!-- Linha 1: Selects -->
+        <div class="linha1">
+            <div class="select-group">
+                <label for="select1">Tipo de chamado</label>
+                <select id="select1" name="setor">
+                    <option value="">Selecione</option>
+                    <option value="Software">Software</option>
+                    <option value="Hardware">Hardware</option>
+                    <option value="Acesso">Acesso</option>
+                </select>
             </div>
-            <?php 
-            $result = mysqli_query($conn,"select * from calling order by idCalling desc limit 10");
-            while($dados = mysqli_fetch_array($result)){
-                $dates = date('d/m/Y H:i:s',strtotime($dados['time']));
-            ?>            
-            <div class="container-calling span">
-                <section><?=$dados['idCalling']?></section>
-                <section><?=$dates?></section>
-                <section><?=$dados['sector']?></section>
-                <section><?=$dados['server']?></section>
-                <section><?=$dados['type']?></section>
-                <section><?=$dados['status']?></section>
-                <section>
-                    <form action="" class="formEdit" method="POST">
-                        <input type="hidden" name="idCalling" value="<?=$dados['idCalling']?>">
-                        <select name="status">
-                            <option value="Em progresso"> Em progresso </option>
-                            <option value="Finalizado"> Finalizado </option>
-                        </select>
-                        <input type="submit" name="editStatus" value="Salvar">
-                    </form>
-                </section>
+            <div class="select-group">
+                <label for="select2">Estado do chamado</label>
+                <select id="select2" name="status">
+                    <option value="">Selecione</option>
+                    <option value="Em espera">Em espera</option>
+                    <option value="Em processo" >Em andamento</option>
+                    <option>Finalizado</option>
+                </select>
             </div>
-            <?php } ?>
+            <div class="select-group">
+                <label for="select4">Período</label>
+                <div class="radios">
+                    <label><input type="radio" name="filterDownload" value="0" checked> TODOS</label>
+                    <label><input type="radio" name="filterDownload" value="1"> DIA</label>
+                    <label><input type="radio" name="filterDownload" value="2"> SEMANA</label>
+                    <label><input type="radio" name="filterDownload" value="3"> MÊS</label>
+                </div>  
+            </div>
+            <!-- 
+            <div class="select-group">
+                <label for="select3">Prioridade</label>
+                <select id="select3" name="prioridade">
+                    <option value="">Selecione</option>
+                    <option>Alta</option>
+                    <option>Média</option>
+                    <option>Baixa</option>
+                </select>
+            </div>
+            -->
+
+            <button id="btnDownload" type="button">Download</button>
         </div>
+        <?php 
+
+
+        ?>
+        <div class="linha2">
+            <div class="radio-group">
+                <label><input id="dateControl" type="date" name="dateControl"></label>
+                <label><input type="radio" name="filterTime" value="dia" checked> DIA</label>
+                <label><input type="radio" name="filterTime" value="semana"> SEMANA</label>
+                <label><input type="radio" name="filterTime" value="mes"> MÊS</label>
+            </div>
+            <div class="info-card">
+                <div>Soma do tempo total de atendimentos / Nº de chamados concluídos</div>
+                <div class="percent">75%</div>
+                <button>Ver Mais</button>
+            </div>
+            <div class="info-card">
+                <div>Tempo total para resolver os chamados / Nº total de chamados resolvidos</div>
+                <div class="percent">60%</div>
+                <button>Ver Mais</button>
+            </div>
+            <div class="info-card">
+                <div>(% de respostas positivas em pesquisas de satisfação)</div>
+                <div class="percent">45%</div>
+                <button>Ver Mais</button>
+            </div>
+            <div class="info-card">
+                <div>Nº de chamados resolvidos no primeiro atendimento / total de chamados</div>
+                <div class="percent">30%</div>
+                <button>Ver Mais</button>
+            </div>
+        </div>
+
+        <!-- Linha 3: Info Cards -->
+        <div class="linha3">
+            <div class="info-card" id="countTotal">
+                <div>Quantidade de chamados registrados (diário, semanal, mensal) (ok)</div>
+                <div class="percent"></div>
+                <button>Ver Mais</button>
+            </div>
+            <div class="info-card">
+                <div>Nº de chamados reabertos / Nº total de chamados</div>
+                <div class="percent">15%</div>
+                <button>Ver Mais</button>
+            </div>
+            <div class="info-card">
+                <div>Nº de chamados atendidos dentro do prazo / Nº total de chamados</div>
+                <div class="percent">50%</div>
+                <button>Ver Mais</button>
+            </div>
+            <div class="info-card">
+                <div>Chamados abertos há mais de X dias</div>
+                <div class="percent">85%</div>
+                <button>Ver Mais</button>
+            </div>
+        </div>
+    </div>
 </main>
-<?php }else{ ?>
+
+<?php else: ?>
 <section class="login">
     <div class="putPassword">
-        <?php 
-        if(!empty($_SESSION['userti'])){
-            var_dump($_SESSION['userti']);
-        }
-        ?>
-            <h2>Senha: </h2>
-             <?php 
-                if(!empty($erro)){
-                    echo $erro;
-                }
-            ?>
-            <form action="" method="post">
-                <input type="password" name="password" placeholder="Senha">
-                <input type="submit" name="sendPassword" value="Entrar">  
-            </form>
+        <h2>Senha:</h2>
+        <?php if(!empty($erro)) echo $erro; ?>
+        <form action="" method="post">
+            <input type="password" name="password" placeholder="Senha">
+            <input type="submit" name="sendPassword" value="Entrar">  
+        </form>
     </div>    
 </section>
-<?php } ?>
+<?php endif; ?>
 <style>
-.login{
+.info-card button{
+    display: none;
+}
+* {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+    font-family: sans-serif;
+}
+body {
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+.container {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: 20px;
+    width: 100%;
+}
+.linha1 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+}
+.select-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.linha1 label {
+    font-weight: bold;
+}
+.linha1 select, .linha1 button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.linha2, .linha3 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+}
+.radio-group {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    & input[type=date]{
+        width: 200px;
+        padding: 5px;
+    }
+}
+.info-card {
+    background-color: #e0f0ff;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* font-size: 0.8em; */
+    text-align: center;
+    margin-top: 40px;
+    min-height: 200px;
+    
+}
+.info-card div:first-child {
+    min-height: 40px;
+}
+.info-card .percent {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007BFF;
+}
+.info-card button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+}
+.info-card button:hover {
+    background-color: #0056b3;
+}
+#btnDownload {
+    padding: 5px;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+    border: 1px solid grey;
+    padding: none;
+}
+#btnDownload:hover {
+    background-color:rgb(189, 219, 253);
+}
+.login {
     position: absolute;
     height: 100%;
     width: 100%;
@@ -115,108 +265,57 @@ if(isset($_POST['logout'])){
 }
 .putPassword {
     background-color: #fff;
-    width: 600px;
-    height: 450px;
+    width: 400px;
+    padding: 30px;
     border-radius: 10px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-.putPassword h2 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-    font-weight: 600;
-}
-
-.putPassword form {
-    width: 100%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
     gap: 15px;
+    align-items: center;
 }
-
-.putPassword input[type="password"] {
-    padding: 12px 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 16px;
-    width: 100%;
-    box-sizing: border-box;
-    transition: border-color 0.3s;
+.putPassword h2 {
+    font-size: 24px;
+    color: #333;
 }
-
-.putPassword input[type="password"]:focus {
-    border-color: #007BFF;
-    outline: none;
-}
-
+.putPassword input[type="password"],
 .putPassword input[type="submit"] {
-    padding: 12px 15px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.putPassword input[type="submit"] {
     background-color: #007BFF;
     color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
-
 .putPassword input[type="submit"]:hover {
     background-color: #0056b3;
 }
-.formEdit{
-    display: flex;
-    flex-direction: column;
-}
-.formEdit select, .formEdit input{
-    padding: 5px;
-}
-.error{
-    color: white;
-    background-color: rgb(252, 185, 185);
-    border: 1px solid rgb(209, 79, 79);
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 5px;
-    color: rgb(209, 79, 79);
+.error {
+    color: #b30000;
     font-weight: bold;
-}
-* , body{
-    margin: 0;
-    box-sizing: border-box;
-    border-spacing: 0;
-    padding: 0;
-    font-family: sans-serif;
-}
-main{
-    background-color: lightblue;
-    width: 95%;
-    margin: 0 auto;
-    padding: 20px;
-    min-height: 99vh;
 }
 .logoutForm{
     display: flex;
     width: 100%;
     justify-content: space-between;
+    font-weight: bold;
     & .btnMenuUp {
         color: black;
+        text-decoration: none;
         padding: 20px;
         border-radius: 10px;
+        font-weight: bold;
         border: none;
-        background-color:rgb(255, 157, 133);
+        background-color: #ff4d4d;
         box-shadow: 1px 1px 2px 1px rgb(122, 122, 122);
         border: 1px solid transparent;
     }
     & .btnMenuUp:hover{
         cursor: pointer;
-        background-color:rgb(253, 174, 154);
+        background-color: #e60000; 
     }
     & .btnMenuUp:nth-child(odd) {
         background-color:rgb(142, 195, 255);
@@ -225,61 +324,8 @@ main{
         background-color:rgb(155, 202, 255);
     }
 }
-h1,h2{
-    margin-top: 10px;
-    text-align: center;
-}
-.forms{
-    display: flex;
-    flex-wrap: wrap;
-    padding: 5px;
-}
-.forms label{
-    width: 100%;
-    text-align: center;
-    font-weight: bold;
-}
-.forms input{
-    padding: 10px;
-    font-size: 1.1em;
-    margin: 0 auto;
-}
-.forms input[type=submit]{
-    background-color: rgb(87, 175, 171);
-    border: none;
-    box-shadow: 1px 1px 2px 1px rgb(122, 122, 122);
-    margin-bottom: 10px;
-    width: 130px;
-    border: 1px solid transparent;
-}
-.forms input[type=submit]:hover{
-    cursor: pointer;
-    background-color: rgb(100, 247, 247);
-    font-weight: bold;
-    border: 1px solid black;
-}
-.container-calling:nth-child(2){
-    font-weight: bold;
-}
-.container-calling{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background-color: rgb(95, 182, 236);
-    padding: 5px;
-    margin-top: 5px;
-}
-.container-calling section{
-    width: calc(100%/7);
-    padding: 5px;
-}
-.span:nth-child(odd){
-    background-color: rgb(236, 250, 250);
-}
-.span:nth-child(even){
-    background-color: rgb(87, 175, 171);
-}
 </style>
-<!-- <footer style="margin-top: 100px; height: 10px;width: 100%; text-align:center; margin-bottom: 50px;"><a href="https://ruanbarrodev.netlify.app/ruanx14_">Ruan Barroso</a></footer> -->
+
 </body>
+<script src="admin.js"></script>
 </html>

@@ -40,7 +40,7 @@ if(isset($_POST['logout'])){
 <main>
     <form class="logoutForm" action="" method="post">
         <a class="btnMenuUp" href="admin">Administração</a>
-        <input class="btnMenuUp" type="submit" name="logout" value="LOGOUT">
+        <input class="btnMenuUp" type="submit" name="logout" value="SAIR">
     </form>
     <!-- Author Ruan Barroso -->
     <h1>Administração</h1>
@@ -72,7 +72,7 @@ if(isset($_POST['logout'])){
                 <section>Alterar:</section>
             </div>
             <?php 
-            $result = mysqli_query($conn,"select * from calling order by idCalling desc limit 15");
+            $result = mysqli_query($conn,"select * from calling order by idCalling desc limit 20");
             while($dados = mysqli_fetch_array($result)){
                 $dates = date('d/m/Y H:i:s',strtotime($dados['time']));
                 if($dados['status']=='Em espera'){
@@ -299,6 +299,9 @@ if(isset($_POST['logout'])){
     padding: 0;
     font-family: sans-serif;
 }
+body{
+     background-color: #f4f4f4;
+}
 main{
     width: 95%;
     margin: 0 auto;
@@ -310,18 +313,21 @@ main{
     display: flex;
     width: 100%;
     justify-content: space-between;
+    font-weight: bold;
     & .btnMenuUp {
         color: black;
+        text-decoration: none;
         padding: 20px;
         border-radius: 10px;
+        font-weight: bold;
         border: none;
-        background-color:rgb(255, 157, 133);
+        background-color: #ff4d4d;
         box-shadow: 1px 1px 2px 1px rgb(122, 122, 122);
         border: 1px solid transparent;
     }
     & .btnMenuUp:hover{
         cursor: pointer;
-        background-color:rgb(253, 174, 154);
+        background-color: #e60000; 
     }
     & .btnMenuUp:nth-child(odd) {
         background-color:rgb(142, 195, 255);
@@ -380,10 +386,10 @@ h1,h2{
     /* display: flex; */
 }
 .span:nth-child(odd){
-    background-color: rgb(236, 250, 250);
+    background-color: rgb(208, 241, 241);
 }
 .span:nth-child(even){
-    background-color: rgb(87, 175, 171);
+    background-color: rgb(182, 235, 232);
 }
 </style>
 <!-- <footer style="margin-top: 100px; height: 10px;width: 100%; text-align:center; margin-bottom: 50px;"><a href="https://ruanbarrodev.netlify.app/ruanx14_">Ruan Barroso</a></footer> -->

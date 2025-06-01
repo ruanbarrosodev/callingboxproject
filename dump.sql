@@ -7,6 +7,8 @@ create table if not exists calling(
     server varchar(100) not null,
     type varchar(100) not null,
     status varchar(100) not null,
+    user_key varchar(200) not null,
+    nota int null,
     primary key(idCalling)
 );
 
