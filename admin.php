@@ -35,9 +35,10 @@ if(isset($_POST['logout'])){
     <div class="container" style="display: grid; grid-template-rows: auto auto auto; gap: 20px; padding: 20px;">
     <!-- Linha 1: Selects -->
         <div class="linha1">
+            <form action="generateExcel.php" method="post">
             <div class="select-group">
                 <label for="select1">Tipo de chamado</label>
-                <select id="select1" name="setor">
+                <select id="select1" name="tipoChamado">
                     <option value="">Selecione</option>
                     <option value="Software">Software</option>
                     <option value="Hardware">Hardware</option>
@@ -56,25 +57,16 @@ if(isset($_POST['logout'])){
             <div class="select-group">
                 <label for="select4">Período</label>
                 <div class="radios">
-                    <label><input type="radio" name="filterDownload" value="0" checked> TODOS</label>
-                    <label><input type="radio" name="filterDownload" value="1"> DIA</label>
-                    <label><input type="radio" name="filterDownload" value="2"> SEMANA</label>
-                    <label><input type="radio" name="filterDownload" value="3"> MÊS</label>
+                    <label><input type="radio" name="filterDownload" value="all" checked> TODOS</label>
+                    <label><input type="radio" name="filterDownload" value="day"> DIA</label>
+                    <label><input type="radio" name="filterDownload" value="week"> SEMANA</label>
+                    <label><input type="radio" name="filterDownload" value="month"> MÊS</label>
                 </div>  
+                
+                <label><input style="width: 100%; height: 40px;" id="dateSearch" type="date" name="dateSearch"></label>
             </div>
-            <!-- 
-            <div class="select-group">
-                <label for="select3">Prioridade</label>
-                <select id="select3" name="prioridade">
-                    <option value="">Selecione</option>
-                    <option>Alta</option>
-                    <option>Média</option>
-                    <option>Baixa</option>
-                </select>
-            </div>
-            -->
-
-            <button id="btnDownload" type="button">Download</button>
+            <button type="submit" id="btnDownload">Download</button>
+        </form>
         </div>
         <?php 
 
@@ -167,7 +159,7 @@ body {
     gap: 20px;
     width: 100%;
 }
-.linha1 {
+.linha1 form {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 15px;

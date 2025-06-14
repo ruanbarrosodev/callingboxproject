@@ -1,0 +1,17 @@
+{
+    "name": "ruanx14/callingboxproject",
+    "autoload": {
+        "psr-4": {
+            "Ruanx14\\Callingboxproject\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ruan Barroso",
+            "email": "ruanx14@gmail.com"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^4.3"
+    }
+}
