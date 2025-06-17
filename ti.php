@@ -19,11 +19,12 @@ if(isset($_POST['editStatus'])){
     }else if($_POST['status']=='Finalizado'){
         $fieldChanged = "doneTime";
     }
+    date_default_timezone_set('America/Manaus');
     $dateNow = date("Y-m-d H:i:s");
     $sql = "
         update calling
         set status='".$_POST['status']."'
-        ,$fieldChanged='$updateTime'
+        ,$fieldChanged='$dateNow'
         where idCalling=".$_POST['idCalling'];
         error_log($sql);
         

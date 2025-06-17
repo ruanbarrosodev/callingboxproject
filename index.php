@@ -86,8 +86,8 @@ if ($result && mysqli_num_rows($result) > 0):
 
 
             <br>
-            <label for="comentario">Comentário:</label><br>
-            <textarea name="comentario" id="comentario" rows="4" cols="40"></textarea>
+           <!--  <label for="comentario">Comentário:</label><br>
+            <textarea name="comentario" id="comentario" rows="4" cols="40"></textarea> -->
             <br><br>
             <button type="submit" name="enviarNota" >Enviar Avaliação</button>
         </form>
