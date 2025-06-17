@@ -17,11 +17,12 @@ if(!isset($_SESSION['user_key'])){
 require('connection.php');
 
 if(isset($_POST['makeCall'])){
-    $sql = "INSERT INTO calling(sector, server, type, status, user_key) VALUES (
+    $sql = "INSERT INTO calling(sector, server, type, status,description, user_key) VALUES (
         '".$_POST['sector']."',
         '".$_POST['server']."',
         '".$_POST['type']."',
         'Em espera',
+        '".$_POST['description']."',
         '".$_SESSION['user_key']."'
     )";
 
@@ -86,7 +87,7 @@ if ($result && mysqli_num_rows($result) > 0):
 
             <br>
             <label for="comentario">Comentário:</label><br>
-            <textarea name="comentario" rows="4" cols="40"></textarea>
+            <textarea name="comentario" id="comentario" rows="4" cols="40"></textarea>
             <br><br>
             <button type="submit" name="enviarNota" >Enviar Avaliação</button>
         </form>
@@ -143,8 +144,8 @@ if ($result && mysqli_num_rows($result) > 0):
                 <input type="text" id="sector" name="sector" placeholder="Setor e Andar">
             </div> -->
             <div class="forms">
-                <label for="sector">Servidor</label>
-                <input type="text" id="sector" name="server" placeholder="Servidor" required>
+                <label for="sector">Usuário(nome.sobrenome)</label>
+                <input type="text" id="sector" name="server" placeholder="Usuário" required>
             </div>
             <div class="forms">
                 <label for="sector">Tipo de chamado </label>
@@ -160,6 +161,11 @@ if ($result && mysqli_num_rows($result) > 0):
                 <input type="text" id="time" name="time" disabled>
             </div>
             <div class="forms">
+                <label for="Obss">Observação/Descrição </label>
+                <textarea id="Obss" name="description"></textarea>
+            </div>
+            
+            <div class="forms">
                 <input type="submit" id="makeCall" name="makeCall" value="Abrir agora!">
             </div>
         </form>
@@ -169,7 +175,7 @@ if ($result && mysqli_num_rows($result) > 0):
             <div class="container-calling">
                 <section>Horario:</section>
                 <section>Setor:</section>
-                <section>Servidor:</section>
+                <section>Usuário:</section>
                 <section>Estado:</section>
             </div>
             <?php
@@ -281,7 +287,6 @@ if ($result && mysqli_num_rows($result) > 0):
     padding: 20px;
     border: 1px solid #888;
     width: 300px;
-    height: 400px; /* ou ajuste como preferir */
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     text-align: center;
@@ -350,14 +355,17 @@ h1,h2{
     text-align: center;
     font-weight: bold;
 }
-.forms input, .forms select{
+.forms input, .forms select, .forms textarea{
     padding: 10px;
     font-size: 1.1em;
     margin: 0 auto;
-    width: 300px;
+    width: 350px;
+}
+.forms textarea{
+    width: 500px;
+    height: 80px;
 }
 .forms input[type=submit]{
-    
     background-color: rgb(173, 255, 255);
     border-radius: 5px;
     border: none;
@@ -415,7 +423,6 @@ h1,h2{
     animation: fadeIn 0.3s ease;
     text-align: center;
     width: 400px;
-    height: 400px;
 }
 .close-btn {
     position: absolute;

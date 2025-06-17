@@ -1,0 +1,11 @@
+[17-Jun-2025 14:54:29 Europe/Berlin] 
+    update calling
+    set status='Em progresso'
+    ,updateTime='2025-06-17 14:54:29'
+    where idCalling=2
+[17-Jun-2025 15:01:42 Europe/Berlin] PHP Warning:  Undefined variable $updateTime in C:\xampp\htdocs\callingboxproject\ti.php on line 26
+[17-Jun-2025 15:01:42 Europe/Berlin] 
+        update calling
+        set status='Finalizado'
+        ,doneTime=''
+        where idCalling=2

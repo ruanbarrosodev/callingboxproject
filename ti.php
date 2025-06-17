@@ -14,13 +14,23 @@ session_start();
 require('connection.php');
 
 if(isset($_POST['editStatus'])){
+    if($_POST['status']=='Em progresso'){
+        $fieldChanged = "updateTime";
+    }else if($_POST['status']=='Finalizado'){
+        $fieldChanged = "doneTime";
+    }
+    $dateNow = date("Y-m-d H:i:s");
     $sql = "
-    update calling
-    set status='".$_POST['status']."'
-    where idCalling=".$_POST['idCalling'];
-    mysqli_query($conn, $sql);
-    header("Location: ./ti");
-    exit;
+        update calling
+        set status='".$_POST['status']."'
+        ,$fieldChanged='$updateTime'
+        where idCalling=".$_POST['idCalling'];
+        error_log($sql);
+        
+        mysqli_query($conn, $sql);
+        
+        header("Location: ./ti");
+        exit;
 }
 if(isset($_POST['sendPassword'])){
     if($_POST['password']=='freedom' || $_POST['password'] == 'FREEDOM'){
@@ -66,7 +76,7 @@ if(isset($_POST['logout'])){
                 <section>ID:</section>
                 <section>Horario:</section>
                 <section>Setor: </section>
-                <section>Servidor: </section>
+                <section>Usuário: </section>
                 <section>Tipo: </section>
                 <section>Estado:</section>
                 <section>Alterar:</section>
@@ -95,7 +105,11 @@ if(isset($_POST['logout'])){
                     <form action="" class="formEdit" method="POST">
                         <input type="hidden" name="idCalling" value="<?=$dados['idCalling']?>">
                         <select class="selectStatus" name="status">
+                            <?php 
+                            if($dados['status']!='Em progresso'){
+                            ?>
                             <option value="Em progresso"> Em progresso </option>
+                            <?php } ?>
                             <option value="Finalizado"> Finalizado </option>
                         </select>
                         <input id="btnSalvarStatus" type="submit" name="editStatus" value="Salvar">

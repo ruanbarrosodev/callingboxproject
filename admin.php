@@ -94,30 +94,29 @@ if(isset($_POST['logout'])){
                 <div class="percent">45%</div>
                 <button>Ver Mais</button>
             </div>
-            <div class="info-card">
+            <!-- <div class="info-card">
                 <div>Nº de chamados resolvidos no primeiro atendimento / total de chamados</div>
                 <div class="percent">30%</div>
                 <button>Ver Mais</button>
-            </div>
+            </div> -->
         </div>
 
-        <!-- Linha 3: Info Cards -->
         <div class="linha3">
             <div class="info-card" id="countTotal">
                 <div>Quantidade de chamados registrados (diário, semanal, mensal) (ok)</div>
                 <div class="percent"></div>
                 <button>Ver Mais</button>
             </div>
-            <div class="info-card">
+            <!-- <div class="info-card">
                 <div>Nº de chamados reabertos / Nº total de chamados</div>
                 <div class="percent">15%</div>
                 <button>Ver Mais</button>
-            </div>
+            </div> -->
             <div class="info-card">
                 <div>Nº de chamados atendidos dentro do prazo / Nº total de chamados</div>
                 <div class="percent">50%</div>
                 <button>Ver Mais</button>
-            </div>
+            </div> 
             <div class="info-card">
                 <div>Chamados abertos há mais de X dias</div>
                 <div class="percent">85%</div>
@@ -183,7 +182,7 @@ body {
 
 .linha2, .linha3 {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
     background-color: #fff;
     padding: 20px;
