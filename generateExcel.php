@@ -71,14 +71,24 @@ $sheet = $spreadsheet->getActiveSheet();
 
 if (mysqli_num_rows($result) > 0) {
     // Cabeçalhos
-    $campos = array_keys(mysqli_fetch_assoc($result));
+    /* $campos = array_keys(mysqli_fetch_assoc($result));
     mysqli_data_seek($result, 0);
 
     foreach ($campos as $i => $campo) {
         $col = Coordinate::stringFromColumnIndex($i + 1);
         $sheet->setCellValue($col . '1', $campo);
     }
+ */
+    $cabecalhos = [
+    'ID', 'Criação', 'Atualização', 'Encerrado',
+    'Setor', 'Usuário', 'Tipo', 'Status',
+    'Descrição', 'User_Key', 'Nota atribuída.'
+    ];
 
+    foreach ($cabecalhos as $i => $titulo) {
+        $col = Coordinate::stringFromColumnIndex($i + 1);
+        $sheet->setCellValue($col . '1', $titulo);
+    }
     // Dados
     $linha = 2;
     while ($row = mysqli_fetch_assoc($result)) {
