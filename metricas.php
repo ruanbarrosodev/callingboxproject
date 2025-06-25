@@ -35,12 +35,29 @@ if (empty($dateControl)) {
 
 $sql = "SELECT * FROM calling WHERE $where";
 $result = mysqli_query($conn, $sql);
+$data = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $data[] = $row;
+}
+
+$sql2 = "SELECT COUNT(*) AS metrica6
+         FROM calling
+         WHERE doneTime IS NULL
+           AND time < NOW() - INTERVAL 2 DAY";
+
+$result2 = mysqli_query($conn, $sql2);
+$metrica6 = 0;
+
+if ($result2 && $row = mysqli_fetch_assoc($result2)) {
+    $metrica6 = (int) $row['metrica6'];
+}
 
 $response = array(
     'count' => mysqli_num_rows($result),
     'query' => $sql,
     'dateControl' => $dateControl,
-    'filterTime' => $tipo
+    'filterTime' => $tipo,
+    'metrica6' => $metrica6
 );
 
 echo json_encode($response);

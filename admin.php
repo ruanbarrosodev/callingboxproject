@@ -117,9 +117,9 @@ if(isset($_POST['logout'])){
                 <div class="percent">50%</div>
                 <button>Ver Mais</button>
             </div> 
-            <div class="info-card">
-                <div>Chamados abertos há mais de X dias</div>
-                <div class="percent">85%</div>
+            <div class="info-card" id="countMetrica6">
+                <div>Chamados abertos há mais de 2 dias</div>
+                <div class="percent"></div>
                 <button>Ver Mais</button>
             </div>
         </div>

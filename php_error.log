@@ -21,3 +21,4 @@
         where idCalling=4
 [17-Jun-2025 17:32:04 Europe/Berlin] SELECT * FROM calling
 [17-Jun-2025 17:46:20 Europe/Berlin] SELECT * FROM calling
+[17-Jun-2025 17:54:10 Europe/Berlin] SELECT * FROM calling
