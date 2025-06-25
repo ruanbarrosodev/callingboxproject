@@ -35,29 +35,42 @@ if (empty($dateControl)) {
 
 $sql = "SELECT * FROM calling WHERE $where";
 $result = mysqli_query($conn, $sql);
+$countTotal = mysqli_num_rows($result);
 $data = [];
+$metrica = [];
 while ($row = mysqli_fetch_assoc($result)) {
     $data[] = $row;
 }
 
-$sql2 = "SELECT COUNT(*) AS metrica6
+
+
+$sql5 = "SELECT count(*) as metrica5
+FROM calling
+WHERE doneTime IS NOT NULL
+AND TIMESTAMPDIFF(DAY, time, doneTime) <= 2";
+
+$result5 = mysqli_query($conn, $sql5);
+if ($result5 && $row = mysqli_fetch_assoc($result5)) {
+    $countMetrica5 = (int) $row['metrica5'];
+    $metrica[5] = $countMetrica5/$countTotal;
+}
+
+$sql6 = "SELECT COUNT(*) AS metrica6
          FROM calling
          WHERE doneTime IS NULL
            AND time < NOW() - INTERVAL 2 DAY";
-
-$result2 = mysqli_query($conn, $sql2);
-$metrica6 = 0;
-
-if ($result2 && $row = mysqli_fetch_assoc($result2)) {
-    $metrica6 = (int) $row['metrica6'];
+$result6 = mysqli_query($conn, $sql6);
+if ($result6 && $row = mysqli_fetch_assoc($result6)) {
+    $metrica[6] = (int) $row['metrica6'];
 }
 
 $response = array(
-    'count' => mysqli_num_rows($result),
+    'countTotal' => $countTotal,
     'query' => $sql,
     'dateControl' => $dateControl,
     'filterTime' => $tipo,
-    'metrica6' => $metrica6
+    'metrica5' => $metrica[5],
+    'metrica6' => $metrica[6]
 );
 
 echo json_encode($response);

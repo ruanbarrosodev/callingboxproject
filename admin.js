@@ -9,7 +9,8 @@ function enviarFiltro(tipo) {
     .then(response => response.json())
     .then(data => {
         console.log(data);
-        document.querySelector("#countTotal .percent").innerHTML = data.count;
+        document.querySelector("#countTotal .percent").innerHTML = data.countTotal;
+        document.querySelector("#countMetrica5 .percent").innerHTML = data.metrica5;
         document.querySelector("#countMetrica6 .percent").innerHTML = data.metrica6;
     })
     .catch(error => {

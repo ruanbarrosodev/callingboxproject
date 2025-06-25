@@ -103,7 +103,7 @@ if(isset($_POST['logout'])){
 
         <div class="linha3">
             <div class="info-card" id="countTotal">
-                <div>Quantidade de chamados registrados (diário, semanal, mensal) (ok)</div>
+                <div>Quantidade de chamados registrados (diário, semanal, mensal)</div>
                 <div class="percent"></div>
                 <button>Ver Mais</button>
             </div>
@@ -112,7 +112,7 @@ if(isset($_POST['logout'])){
                 <div class="percent">15%</div>
                 <button>Ver Mais</button>
             </div> -->
-            <div class="info-card">
+            <div class="info-card" id="countMetrica5">
                 <div>Nº de chamados atendidos dentro do prazo / Nº total de chamados</div>
                 <div class="percent">50%</div>
                 <button>Ver Mais</button>

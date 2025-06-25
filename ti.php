@@ -74,7 +74,7 @@ if(isset($_POST['logout'])){
         <div class="callings">
             <h2>Chamados </h2>
             <div class="container-calling">
-                <section>ID:</section>
+                <section>Descrição:</section>
                 <section>Horario:</section>
                 <section>Setor: </section>
                 <section>Usuário: </section>
@@ -95,7 +95,7 @@ if(isset($_POST['logout'])){
                 }
             ?>            
             <div class="container-calling span">
-                <section><?=$dados['idCalling']?></section>
+                <section><?=$dados['description']?></section>
                 <section><?=$dates?></section>
                 <section><?=$dados['sector']?></section>
                 <section><?=$dados['server']?></section>
