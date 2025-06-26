@@ -35,7 +35,10 @@ if (empty($dateControl)) {
 
 $sql = "SELECT * FROM calling WHERE $where";
 $result = mysqli_query($conn, $sql);
-$countTotal = mysqli_num_rows($result);
+$countByDate = mysqli_num_rows($result);
+$sqlTotal = "SELECT * FROM calling";
+$resultTotal = mysqli_query($conn, $sqlTotal);
+$countTotal = mysqli_num_rows($resultTotal);
 $data = [];
 $metrica = [];
 while ($row = mysqli_fetch_assoc($result)) {
@@ -52,7 +55,8 @@ AND TIMESTAMPDIFF(DAY, time, doneTime) <= 2";
 $result5 = mysqli_query($conn, $sql5);
 if ($result5 && $row = mysqli_fetch_assoc($result5)) {
     $countMetrica5 = (int) $row['metrica5'];
-    $metrica[5] = $countMetrica5/$countTotal;
+    error_log( $countMetrica5);
+    $metrica[5] = ($countTotal > 0) ? round(($countMetrica5 / $countTotal) * 100, 2) . '%' : '0%';
 }
 
 $sql6 = "SELECT COUNT(*) AS metrica6
@@ -63,9 +67,9 @@ $result6 = mysqli_query($conn, $sql6);
 if ($result6 && $row = mysqli_fetch_assoc($result6)) {
     $metrica[6] = (int) $row['metrica6'];
 }
-
+error_log($metrica[5] . " . " . $countTotal);
 $response = array(
-    'countTotal' => $countTotal,
+    'countByDate' => $countByDate,
     'query' => $sql,
     'dateControl' => $dateControl,
     'filterTime' => $tipo,

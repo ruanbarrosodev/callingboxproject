@@ -114,7 +114,7 @@ if(isset($_POST['logout'])){
             </div> -->
             <div class="info-card" id="countMetrica5">
                 <div>Nº de chamados atendidos dentro do prazo / Nº total de chamados</div>
-                <div class="percent">50%</div>
+                <div class="percent"></div>
                 <button>Ver Mais</button>
             </div> 
             <div class="info-card" id="countMetrica6">

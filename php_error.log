@@ -1,24 +1,42 @@
-[17-Jun-2025 16:20:14 Europe/Berlin] PHP Warning:  Undefined variable $updateTime in C:\xampp\htdocs\callingboxproject\ti.php on line 26
-[17-Jun-2025 16:20:14 Europe/Berlin] 
-        update calling
-        set status='Em progresso'
-        ,updateTime=''
-        where idCalling=3
-[17-Jun-2025 16:22:58 Europe/Berlin] 
-        update calling
-        set status='Finalizado'
-        ,doneTime='2025-06-17 16:22:58'
-        where idCalling=3
-[17-Jun-2025 11:34:00 America/Sao_Paulo] 
-        update calling
-        set status='Em progresso'
-        ,updateTime='2025-06-17 11:34:00'
-        where idCalling=4
-[17-Jun-2025 10:35:05 America/Manaus] 
-        update calling
-        set status='Finalizado'
-        ,doneTime='2025-06-17 10:35:05'
-        where idCalling=4
-[17-Jun-2025 17:32:04 Europe/Berlin] SELECT * FROM calling
-[17-Jun-2025 17:46:20 Europe/Berlin] SELECT * FROM calling
-[17-Jun-2025 17:54:10 Europe/Berlin] SELECT * FROM calling
+[26-Jun-2025 15:21:06 Europe/Berlin] 2
+[26-Jun-2025 15:21:06 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:07 Europe/Berlin] 2
+[26-Jun-2025 15:21:07 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:08 Europe/Berlin] 2
+[26-Jun-2025 15:21:08 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:09 Europe/Berlin] 2
+[26-Jun-2025 15:21:09 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:09 Europe/Berlin] 2
+[26-Jun-2025 15:21:09 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:10 Europe/Berlin] 2
+[26-Jun-2025 15:21:10 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:11 Europe/Berlin] 2
+[26-Jun-2025 15:21:11 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:11 Europe/Berlin] 2
+[26-Jun-2025 15:21:11 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:12 Europe/Berlin] 2
+[26-Jun-2025 15:21:12 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:12 Europe/Berlin] 2
+[26-Jun-2025 15:21:12 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:13 Europe/Berlin] 2
+[26-Jun-2025 15:21:13 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:13 Europe/Berlin] 2
+[26-Jun-2025 15:21:13 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:13 Europe/Berlin] 2
+[26-Jun-2025 15:21:13 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:14 Europe/Berlin] 2
+[26-Jun-2025 15:21:14 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:14 Europe/Berlin] 2
+[26-Jun-2025 15:21:14 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:14 Europe/Berlin] 2
+[26-Jun-2025 15:21:14 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:15 Europe/Berlin] 2
+[26-Jun-2025 15:21:15 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:15 Europe/Berlin] 2
+[26-Jun-2025 15:21:15 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:15 Europe/Berlin] 2
+[26-Jun-2025 15:21:15 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:16 Europe/Berlin] 2
+[26-Jun-2025 15:21:16 Europe/Berlin] 50% . 4
+[26-Jun-2025 15:21:16 Europe/Berlin] 2
+[26-Jun-2025 15:21:16 Europe/Berlin] 50% . 4
