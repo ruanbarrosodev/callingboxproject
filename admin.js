@@ -16,6 +16,9 @@ function enviarFiltro(tipo) {
     .then(response => response.json())
     .then(data => {
         console.log(data);
+        document.querySelector("#countMetrica1 .percent").innerHTML = data.metrica1;
+        document.querySelector("#countMetrica2 .percent").innerHTML = data.metrica2;
+        document.querySelector("#countMetrica3 .percent").innerHTML = data.metrica3;
         document.querySelector("#countTotal .percent").innerHTML = data.countByDate;
         document.querySelector("#countMetrica5 .percent").innerHTML = data.metrica5;
         document.querySelector("#countMetrica6 .percent").innerHTML = data.metrica6;

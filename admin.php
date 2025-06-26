@@ -79,18 +79,18 @@ if(isset($_POST['logout'])){
                 <label><input type="radio" name="filterTime" value="semana"> SEMANA</label>
                 <label><input type="radio" name="filterTime" value="mes"> MÊS</label>
             </div>
-            <div class="info-card">
-                <div>Soma do tempo total de atendimentos / Nº de chamados concluídos</div>
-                <div class="percent">75%</div>
+            <div class="info-card" id="countMetrica1">
+                <div>Tempo Médio de Atendimento (TMA) <br>Soma do tempo total de atendimentos / Nº de chamados concluídos</div>
+                <div class="percent"></div>
                 <button>Ver Mais</button>
             </div>
-            <div class="info-card">
-                <div>Tempo total para resolver os chamados / Nº total de chamados resolvidos</div>
+            <div class="info-card" id="countMetrica2">
+                <div>Tempo Médio de Resolução (TMR) <br> Tempo total para resolver os chamados / Nº total de chamados resolvidos</div>
                 <div class="percent">60%</div>
                 <button>Ver Mais</button>
             </div>
-            <div class="info-card">
-                <div>(% de respostas positivas em pesquisas de satisfação)</div>
+            <div class="info-card" id="countMetrica3">
+                <div>Nível Satisfação do Usuário <br>(% de respostas positivas em pesquisas de satisfação)</div>
                 <div class="percent">45%</div>
                 <button>Ver Mais</button>
             </div>
@@ -113,7 +113,7 @@ if(isset($_POST['logout'])){
                 <button>Ver Mais</button>
             </div> -->
             <div class="info-card" id="countMetrica5">
-                <div>Nº de chamados atendidos dentro do prazo / Nº total de chamados</div>
+                <div>SLA Atendido (%) <br> Nº de chamados atendidos dentro do prazo / Nº total de chamados</div>
                 <div class="percent"></div>
                 <button>Ver Mais</button>
             </div> 
